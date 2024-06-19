@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName=".5" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name=".179">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/disk1/qgking/zlk/Unet" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name=".2">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/qgking/Desktop/disk1/zlk/unet" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name=".213">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/media/npu/Data/zlk/Unet" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name=".5">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/mnt/3bb01a96-4d48-4134-9dcc-1e1cdd11daa3/zlk/DeepClass" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
