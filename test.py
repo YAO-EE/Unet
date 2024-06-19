@@ -29,10 +29,10 @@ parser.add_argument('--checkpoint_path', type=str,
 parser.add_argument('--batch_size', '-b', dest='batch_size', metavar='B', type=int, default=20, help='Batch size')
 parser.add_argument('--load', '-f', type=str, default=False, help='Load model from a .pth file')
 parser.add_argument('--classes', '-c', type=int, default=5, help='Number of classes')
-parser.add_argument('--train_mode', type=str, default="ABMR", help='train mode')
-parser.add_argument('--test_mode', type=str, default="ABCT", help='test mode to run')
-parser.add_argument('--gpu', type=int, default=4, help='gpu to run')
-parser.add_argument('--checkpoint', nargs='+', type=int, default=[0], help='checkpoints to run')
+parser.add_argument('--train_mode', type=str, default="CT", help='train mode')
+parser.add_argument('--test_mode', type=str, default="CT", help='test mode to run')
+parser.add_argument('--gpu', type=int, default=0, help='gpu to run')
+parser.add_argument('--checkpoint', nargs='+', type=int, default=[73], help='checkpoints to run')
 args = parser.parse_args()
 
 """
@@ -114,19 +114,16 @@ def test_single_volume(images, labels, net, num_classes, class_to_pixel, save_pa
             out = torch.take(torch.tensor(list(class_to_pixel.values())).cuda(), pred).unsqueeze(0)
             predictions[ind] = out.cpu()
             # 将预测结果和原始图像叠加在一起
-            image = images[ind].cpu().numpy().transpose(1, 2, 0)
+            image = images[ind].cpu().numpy()[1]  # 提取中间通道
             image = (image - image.min()) / (image.max() - image.min()) * 255
             image = image.astype(np.uint8)
-            label = labels[ind].cpu().numpy()
+            label = labels[ind][0].cpu().numpy()
             pred = out[0].cpu().numpy()
-
-            overlay = image.copy()
-            overlay[pred > 0] = [255, 0, 0]
 
             # 可视化和保存叠加结果
             plt.figure(figsize=(15, 5))
             plt.subplot(1, 3, 1)
-            plt.imshow(image)
+            plt.imshow(image, cmap='gray')
             plt.title('Original Image')
             plt.axis('off')
             plt.subplot(1, 3, 2)
@@ -134,11 +131,12 @@ def test_single_volume(images, labels, net, num_classes, class_to_pixel, save_pa
             plt.title('Ground Truth')
             plt.axis('off')
             plt.subplot(1, 3, 3)
-            plt.imshow(overlay)
-            plt.title('Overlay')
+            plt.imshow(pred, cmap='gray')
+            plt.title('Pred')
             plt.axis('off')
+            plt.show()
 
-            plt.savefig(os.path.join(save_path, f'batch{batch_idx}_img{ind}_overlay.png'))
+            plt.savefig(os.path.join(save_path, f'batch{batch_idx}_img{ind}.png'))
             plt.close()
 
     metric_list = [calculate_metric_percase(predictions == i, labels == i) for i in range(1, num_classes)]
