@@ -113,7 +113,7 @@ def test_single_volume(images, labels, net, num_classes, class_to_pixel, save_pa
             pred = preds[ind].argmax(dim=0)
             out = torch.take(torch.tensor(list(class_to_pixel.values())).cuda(), pred).unsqueeze(0)
             predictions[ind] = out.cpu()
-            # 将预测结果和原始图像叠加在一起
+
             image = images[ind].cpu().numpy()[1]  # 提取中间通道
             image = (image - image.min()) / (image.max() - image.min()) * 255
             image = image.astype(np.uint8)
@@ -132,10 +132,9 @@ def test_single_volume(images, labels, net, num_classes, class_to_pixel, save_pa
             plt.axis('off')
             plt.subplot(1, 3, 3)
             plt.imshow(pred, cmap='gray')
-            plt.title('Pred')
+            plt.title('Prediction')
             plt.axis('off')
             plt.show()
-
             plt.savefig(os.path.join(save_path, f'batch{batch_idx}_img{ind}.png'))
             plt.close()
 
