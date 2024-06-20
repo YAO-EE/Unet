@@ -87,8 +87,6 @@ python test.py --test_mode MR --train_mode CT --gpu 0 --checkpoint 177 178 179
 - 问题报告
 - 文档改进
 
-## 文档
-项目文档可以在 [文档链接] 找到。
 ## 许可
 本项目采用MIT许可证，详情参见**LICENSE 文件**。
 ## 联系我们
